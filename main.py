@@ -171,11 +171,13 @@ if __name__ == "__main__":
 
 
             
-            adsgram_response = send_adsgram_request(telegram_id)
-            if adsgram_response and not adsgram_response.get("success", False):
-                print("Ads limit reached or error encountered. Stopping further processing.")
-                continue
-            print("AdsGram Response:", adsgram_response)
-
+            for _ in range(10):
+                adsgram_response = send_adsgram_request(telegram_id)
+                
+                if adsgram_response and not adsgram_response.get("success", False):
+                    print("Ads limit reached or error encountered. Stopping further processing.")
+                    break
+                
+                print("AdsGram Response:", adsgram_response)
         else:
             print(f"Error processing query ID: {query_id}")
